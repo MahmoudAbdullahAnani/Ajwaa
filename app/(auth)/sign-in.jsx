@@ -50,11 +50,11 @@ const SignIn = () => {
           <Image
             source={images.logo}
             resizeMode="contain"
-            className="w-[115px] h-[34px]"
+            className="w-[100px] h-[100px]"
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to Aora
+            Log in to Ajwaa
           </Text>
 
           <FormField
@@ -85,7 +85,7 @@ const SignIn = () => {
             </Text>
             <Link
               href="/sign-up"
-              className="text-lg font-psemibold text-secondary"
+              className="text-lg font-psemibold text-[#2AA3CD] underline"
             >
               Signup
             </Link>

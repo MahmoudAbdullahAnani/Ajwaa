@@ -41,7 +41,7 @@ const SignUp = () => {
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View
-          className="w-full flex justify-center h-full px-4 my-6"
+          className="w-full flex justify-center h-full px-4 mb-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}
@@ -49,11 +49,11 @@ const SignUp = () => {
           <Image
             source={images.logo}
             resizeMode="contain"
-            className="w-[115px] h-[34px]"
+            className="w-[100px] h-[100px]"
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Sign Up to Aora
+            Sign Up to Ajwaa
           </Text>
 
           <FormField
@@ -91,7 +91,7 @@ const SignUp = () => {
             </Text>
             <Link
               href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
+              className="text-lg font-psemibold text-[#2AA3CD] underline"
             >
               Login
             </Link>

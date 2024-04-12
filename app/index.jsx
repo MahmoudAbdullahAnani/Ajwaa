@@ -35,10 +35,9 @@ const Welcome = () => {
           />
 
           <View className="relative mt-5">
-            <Text className="text-3xl text-white font-bold text-center">
+            <Text className="text-3xl text-white font-bold">
               Discover Endless{"\n"}
-              Possibilities with{" "}
-              <Text className="text-secondary-200">Aora</Text>
+              Possibilities with <Text className="text-[#2AA3CD]">Ajwaa</Text>
             </Text>
 
             <Image
@@ -50,7 +49,7 @@ const Welcome = () => {
 
           <Text className="text-sm font-pregular text-gray-100 mt-7 text-center">
             Where Creativity Meets Innovation: Embark on a Journey of Limitless
-            Exploration with Aora
+            Exploration with Ajwaa
           </Text>
 
           <CustomButton
