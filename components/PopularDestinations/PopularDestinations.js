@@ -123,7 +123,13 @@ export default function PopularDestinations() {
         }}
       >
         <SliderBox
-          images={images}
+          images={[
+            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+          ]}
           sliderBoxHeight={400}
           autoplay={true}
           autoplayInterval={5000}
@@ -164,7 +170,7 @@ export default function PopularDestinations() {
         ))} */}
       </View>
 
-      <View
+      {/* <View
         style={{
           flex: 1,
           height: 200,
@@ -184,7 +190,7 @@ export default function PopularDestinations() {
             objectFit: "fill",
           }}
         />
-      </View>
+      </View> */}
     </View>
   );
 }
