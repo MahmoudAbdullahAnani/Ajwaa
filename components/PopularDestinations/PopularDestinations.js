@@ -132,8 +132,8 @@ export default function PopularDestinations() {
           ImageComponentStyle={{
             borderTopRightRadius: 10,
             borderTopLeftRadius: 10,
-            width: "100%",
-            height: "100%",
+            width: 250,
+            height: 250,
           }}
           imageLoadingColor="#2196F3"
         />
@@ -173,7 +173,10 @@ export default function PopularDestinations() {
         }}
       >
         <Image
-          source={{ uri: data[indexImage].img }}
+          source={{
+            uri: `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
+          }}
+          resizeMode="cover"
           style={{
             width: "100%",
             height: "100%",
@@ -181,14 +184,6 @@ export default function PopularDestinations() {
             objectFit: "fill",
           }}
         />
-        {/* <VideoPlayer
-          video={{
-            uri: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          }}
-          videoWidth={1600}
-          videoHeight={900}
-          thumbnail={{ uri: "https://i.picsum.photos/id/866/1600/900.jpg" }}
-        /> */}
       </View>
     </View>
   );
