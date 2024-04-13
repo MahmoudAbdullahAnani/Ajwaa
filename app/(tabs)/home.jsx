@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FlatList, Image, RefreshControl, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
 
-import { images } from "../../constants";
-import useAppwrite from "../../lib/useAppwrite";
-import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
-import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
 import PopularDestinations from "../../components/PopularDestinations/PopularDestinations";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import KeyFeatures from "../../components/KeyFeatures/KeyFeatures";
+import SafetyGuaranteeCertificates from "../../components/SafetyGuaranteeCertificates/SafetyGuaranteeCertificates";
+import SafetyGuaranteeCertificatesTow from "../../components/SafetyGuaranteeCertificates/SafetyGuaranteeCertificatesTow";
 const Home = () => {
   useEffect(() => {
     const handleData = async () => {
       const data = await AsyncStorage.getItem("UserData");
       // console.log("====================================");
       // console.log("home data==> ", JSON.parse(data));
-
       // console.log("====================================");
     };
 
@@ -23,11 +28,16 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      <SafeAreaView>
-        <Text className={`text-5xl text-red-900 `}>test</Text>
-      </SafeAreaView>
-    </>
+    <SafeAreaView className="bg-primary">
+      <ScrollView className="bg-primary">
+        <PopularDestinations />
+        <View className={`my-6 px-4`}>
+          <KeyFeatures />
+          <SafetyGuaranteeCertificates />
+          <SafetyGuaranteeCertificatesTow />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
 
     // <SafeAreaView className="bg-primary">
     //   <FlatList

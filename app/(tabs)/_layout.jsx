@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { Redirect, Tabs } from "expo-router";
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 
 import { icons } from "../../constants";
 import { Loader } from "../../components";
@@ -50,6 +50,7 @@ const TabLayout = () => {
           options={{
             title: "Home",
             headerShown: false,
+
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.home}

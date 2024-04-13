@@ -55,16 +55,18 @@ const Profile = () => {
           source={icons.logout}
           resizeMode="contain"
           className="w-6 h-6 m-5"
+          alt="Logout"
         />
       </TouchableOpacity>
       <View className="flex flex-col items-center ">
-        <View className={`flex justify-center items-center  `}>
+        <View className={`flex justify-center items-center`}>
           <Image
             source={{
               uri: data.avatar,
             }}
             resizeMode="contain"
             className="w-[100px] h-[100px] rounded-full m-5"
+            alt="Avatar"
           />
         </View>
         <Text className={`text-3xl font-psemibold text-white`}>
@@ -73,6 +75,24 @@ const Profile = () => {
             : `${data.firstName}`}
         </Text>
       </View>
+      {data.age && (
+        <View className="flex justify-center m-5">
+          <Text className={`text-3xl font-psemibold text-white`}>
+            Barth Day:
+          </Text>
+          <Text className={`text-3xl font-psemibold text-white`}>
+            {data.age}
+          </Text>
+        </View>
+      )}
+      {data.email && (
+        <View className="flex justify-center m-5">
+          <Text className={`text-2xl font-psemibold text-white`}>Email:</Text>
+          <Text className={`text-2xl font-psemibold text-white`}>
+            {data.email}
+          </Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };

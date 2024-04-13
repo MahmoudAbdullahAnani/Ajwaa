@@ -8,8 +8,8 @@ import {
   View,
 } from "react-native";
 
-import { trueIcon } from "../../assets/Icons";
-
+import { trueIcon } from "../../assets/SVGRIcons";
+import { StyleHeader } from "../KeyFeatures/KeyFeatures";
 const data = [
   {
     _id: Math.random(),
@@ -48,12 +48,12 @@ export default function SafetyGuaranteeCertificatesTow() {
         gap: 10,
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: "bold" }}>{title}</Text>
-      <Text style={{ fontSize: 16, color: "black" }}>{content}</Text>
+      <Text className={`text-[16px] font-bold text-white`}>{title}</Text>
+      <Text className={`text-[14px] font-bold text-white`}>{content}</Text>
     </View>
   );
   return (
-    <View style={[styles.container]}>
+    <View>
       {/* Image-2 */}
       <View>
         <TouchableOpacity
@@ -78,12 +78,7 @@ export default function SafetyGuaranteeCertificatesTow() {
             }}
             source={require("./../../assets/service/4.png")}
           />
-          <Text
-            style={{
-              fontSize: 12,
-              opacity: 0.6,
-            }}
-          >
+          <Text className={`text-[12px] opacity-[0.6] mb-[8px] text-white`}>
             Click to go to the website
           </Text>
         </TouchableOpacity>

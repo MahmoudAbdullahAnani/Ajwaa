@@ -1,16 +1,15 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import DataKeyFeatures from "./DataKeyFeatures";
-import Svg, { Path } from "react-native-svg";
 import { useState } from "react";
-import { ArrowDown, arrowTop } from "../../assets/Icons";
+import { ArrowDown, arrowTop } from "../../assets/SVGRIcons";
+
+export const StyleHeader = `text-white text-2xl font-bold`;
 export default function KeyFeatures() {
   const [countItemsView, setCountItemsView] = useState(3);
   return (
-    <View style={[styles.container]}>
+    <View className={` `}>
       <View>
-        <Text style={[styles.header, , { color: "#117C99" }]}>
-          Key Features
-        </Text>
+        <Text className={`${StyleHeader}`}>Key Features</Text>
         {DataKeyFeatures.slice(0, countItemsView).map((item) => (
           <View style={{ marginBottom: 18 }} key={`${item._id}--${item._id}`}>
             <View
@@ -22,12 +21,12 @@ export default function KeyFeatures() {
                 marginBottom: 18,
               }}
             >
-              <Text style={[styles.text, { fontWeight: "bold" }]}>
+              <Text className={`text-white text-lg font-bold`}>
                 {item.title}
               </Text>
               <View style={{}}>{item.icon}</View>
             </View>
-            <Text style={styles.text}>{item.content}</Text>
+            <Text className={`text-white text-sm `}>{item.content}</Text>
           </View>
         ))}
         <Pressable
@@ -37,28 +36,7 @@ export default function KeyFeatures() {
             }
             return setCountItemsView(DataKeyFeatures.length);
           }}
-          style={{
-            fontWeight: "bold",
-            padding: 10,
-            backgroundColor: "white",
-            width: 150,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: 8,
-            alignItems: "center",
-            borderRadius: 10,
-            alignSelf: "center",
-            marginBottom: 10,
-            shadowColor: "#117C99",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}
+          className={`text-white text-2xl font-bold flex flex-row justify-center items-center shadow-sm shadow-white bg-green-100 w-[150px] mx-auto p-[10px] rounded-lg`}
         >
           <Text
             style={{
@@ -80,19 +58,3 @@ export default function KeyFeatures() {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-    // marginLeft: 16,
-  },
-});

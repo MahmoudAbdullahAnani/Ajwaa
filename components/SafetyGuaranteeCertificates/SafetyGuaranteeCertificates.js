@@ -8,7 +8,8 @@ import {
   View,
 } from "react-native";
 
-import { trueIcon } from "./../../assets/Icons";
+import { trueIcon } from "../../assets/SVGRIcons";
+import { StyleHeader } from "../KeyFeatures/KeyFeatures";
 
 const data = [
   {
@@ -54,16 +55,14 @@ export default function SafetyGuaranteeCertificates() {
       }}
     >
       <Text style={{}}>{trueIcon}</Text>
-      <Text style={{ fontSize: 16, fontWeight: "bold" }}>{title}</Text>
+      <Text className={`text-[14px] font-bold text-white`}>{title}</Text>
     </View>
   );
   return (
     <View style={[styles.container]}>
       <View>
-        <Text style={[styles.header, { color: "#117C99" }]}>
-          Safety guarantee certificates
-        </Text>
-        <Text style={[styles.text, { marginLeft: 10 }]}>
+        <Text className={`${StyleHeader}`}>Safety guarantee certificates</Text>
+        <Text className={`text-[14px] mb-[8px] text-white`}>
           These are some of the certificates we have obtained in the field of
           car rental over the years of experience we have obtained
         </Text>
@@ -78,27 +77,11 @@ export default function SafetyGuaranteeCertificates() {
             onPress={goToWebSite}
           >
             <Image
-              style={{
-                width: "100%",
-                height: 300,
-                resizeMode: "contain",
-                borderRadius: 6,
-                shadowColor: "#117C99",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-              }}
+              className={`w-full h-[300px] rounded-[6px] shadow-sm shadow-[#117C99] `}
+              resizeMode="contain"
               source={require("./../../assets/service/2.png")}
             />
-            <Text
-              style={{
-                fontSize: 12,
-                opacity: 0.6,
-              }}
-            >
+            <Text className={`text-[12px] opacity-[0.6] mb-[8px] text-white`}>
               Click to go to the website
             </Text>
           </TouchableOpacity>

@@ -1,4 +1,13 @@
-import { service1, service2, service3, service4, service5, service6, service7, service8 } from "../../assets/Icons";
+import {
+  service1,
+  service2,
+  service3,
+  service4,
+  service5,
+  service6,
+  service7,
+  service8,
+} from "../../assets/SVGRIcons";
 
 const DataKeyFeatures = [
   {

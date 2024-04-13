@@ -84,32 +84,35 @@ export default function PopularDestinations() {
     }
   };
 
-  return (
-    <View style={{}}>
-      {loading && (
-        <Modal
+  if (loading) {
+    return (
+      <Modal
+        style={{
+          backgroundColor: "black",
+          opacity: 0.5,
+          flex: 1,
+          padding: 50,
+        }}
+      >
+        <View
           style={{
-            backgroundColor: "black",
-            opacity: 0.5,
             flex: 1,
-            padding: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "black",
           }}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "black",
-            }}
-          >
-            <Image
-              source={require("./../../assets/loadStart.gif")}
-              style={{ width: "100%", height: "30%" }}
-            />
-          </View>
-        </Modal>
-      )}
+          <Image
+            source={require("./../../assets/loadStart.gif")}
+            style={{ width: "100%", height: "30%" }}
+          />
+        </View>
+      </Modal>
+    );
+  }
+
+  return (
+    <View className={`h-[250px] bg-black-200`}>
       <Text style={[styles.header, { color: "#117C99" }]}>
         Popular Destinations ({data.length})
       </Text>
@@ -123,13 +126,7 @@ export default function PopularDestinations() {
         }}
       >
         <SliderBox
-          images={[
-            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-            `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-          ]}
+          images={images}
           sliderBoxHeight={400}
           autoplay={true}
           autoplayInterval={5000}
@@ -138,8 +135,8 @@ export default function PopularDestinations() {
           ImageComponentStyle={{
             borderTopRightRadius: 10,
             borderTopLeftRadius: 10,
-            width: 250,
-            height: 250,
+            width: "100%",
+            height: "100%",
           }}
           imageLoadingColor="#2196F3"
         />
