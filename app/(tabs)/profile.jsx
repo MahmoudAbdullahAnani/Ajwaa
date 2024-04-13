@@ -1,88 +1,78 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity } from "react-native";
+import { View, Image, FlatList, TouchableOpacity, Text } from "react-native";
 
 import { icons } from "../../constants";
-import useAppwrite from "../../lib/useAppwrite";
-import { getUserPosts, signOut } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
-import { EmptyState, InfoBox, VideoCard } from "../../components";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const { user, setUser, setIsLogged } = useGlobalContext();
-  const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
-
+  const { user, setUser, setIsLogged, setLoading } = useGlobalContext();
   const logout = async () => {
-    await signOut();
+    await AsyncStorage.removeItem("UserData");
     setUser(null);
     setIsLogged(false);
 
     router.replace("/sign-in");
   };
 
+  const [loadingState, setLoadingState] = useState(true);
+  const [data, setData] = useState({});
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        "https://my-trip-back-end.onrender.com/me",
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      setLoading(false);
+      setLoadingState(false);
+      setData(response.data);
+      setUser({ token: user.token, ...response.data });
+    } catch (error) {
+      setLoading(false);
+      setLoadingState(false);
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+  if (loadingState) {
+    return <></>;
+  }
   return (
-    <SafeAreaView className="bg-primary h-full">
-      <FlatList
-        data={posts}
-        keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <VideoCard
-            title={item.title}
-            thumbnail={item.thumbnail}
-            video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
+    <SafeAreaView className="bg-primary h-full ">
+      <TouchableOpacity onPress={logout} className="flex w-full items-end">
+        <Image
+          source={icons.logout}
+          resizeMode="contain"
+          className="w-6 h-6 m-5"
+        />
+      </TouchableOpacity>
+      <View className="flex flex-col items-center ">
+        <View className={`flex justify-center items-center  `}>
+          <Image
+            source={{
+              uri: data.avatar,
+            }}
+            resizeMode="contain"
+            className="w-[100px] h-[100px] rounded-full m-5"
           />
-        )}
-        ListEmptyComponent={() => (
-          <EmptyState
-            title="No Videos Found"
-            subtitle="No videos found for this profile"
-          />
-        )}
-        ListHeaderComponent={() => (
-          <View className="w-full flex justify-center items-center mt-6 mb-12 px-4">
-            <TouchableOpacity
-              onPress={logout}
-              className="flex w-full items-end mb-10"
-            >
-              <Image
-                source={icons.logout}
-                resizeMode="contain"
-                className="w-6 h-6"
-              />
-            </TouchableOpacity>
-
-            <View className="w-16 h-16 border border-secondary rounded-lg flex justify-center items-center">
-              <Image
-                source={{ uri: user?.avatar }}
-                className="w-[90%] h-[90%] rounded-lg"
-                resizeMode="cover"
-              />
-            </View>
-
-            <InfoBox
-              title={user?.username}
-              containerStyles="mt-5"
-              titleStyles="text-lg"
-            />
-
-            <View className="mt-5 flex flex-row">
-              <InfoBox
-                title={posts.length || 0}
-                subtitle="Posts"
-                titleStyles="text-xl"
-                containerStyles="mr-10"
-              />
-              <InfoBox
-                title="1.2k"
-                subtitle="Followers"
-                titleStyles="text-xl"
-              />
-            </View>
-          </View>
-        )}
-      />
+        </View>
+        <Text className={`text-3xl font-psemibold text-white`}>
+          {data.lastName !== ""
+            ? `${data.firstName} ${data.lastName}`
+            : `${data.firstName}`}
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };

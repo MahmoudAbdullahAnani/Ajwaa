@@ -1,6 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useEffect, useState } from "react";
-
-import { getCurrentUser } from "../lib/appwrite";
 
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -8,25 +7,25 @@ export const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getCurrentUser()
-      .then((res) => {
-        if (res) {
-          setIsLogged(true);
-          setUser(res);
-        } else {
-          setIsLogged(false);
-          setUser(null);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
+    setLoading(true);
+
+    const handleData = async () => {
+      const isUserLogged = await AsyncStorage.getItem("isUserLogged");
+
+      setLoading(false);
+      if (isUserLogged === "true") {
+        setIsLogged(true);
+        const dataUser = await AsyncStorage.getItem("UserData");
+        setUser(JSON.parse(dataUser));
         setLoading(false);
-      });
+        return router.push("/home");
+      }
+    };
+
+    handleData();
   }, []);
 
   return (
@@ -37,6 +36,7 @@ const GlobalProvider = ({ children }) => {
         user,
         setUser,
         loading,
+        setLoading,
       }}
     >
       {children}

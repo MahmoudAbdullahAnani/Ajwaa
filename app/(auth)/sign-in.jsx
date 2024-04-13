@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  Alert,
+  Image,
+  Pressable,
+} from "react-native";
 
 import { images } from "../../constants";
 import { CustomButton, FormField } from "../../components";
-import { getCurrentUser, signIn } from "../../lib/appwrite";
+// import { signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { signIn } from "../../lib/appwrite";
 
 const SignIn = () => {
   const { setUser, setIsLogged } = useGlobalContext();
@@ -17,26 +28,36 @@ const SignIn = () => {
   });
 
   const submit = async () => {
-    if (form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill in all fields");
+    const { email, password } = form;
+    if (email === "" || password === "") {
+      return Alert.alert("Error", "Please fill in all fields");
     }
 
     setSubmitting(true);
 
     try {
-      await signIn(form.email, form.password);
-      const result = await getCurrentUser();
-      setUser(result);
-      setIsLogged(true);
-
-      Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
+      const data = await signIn(email, password);
       setSubmitting(false);
+      await AsyncStorage.setItem("UserData", JSON.stringify(data));
+
+      await AsyncStorage.setItem("isUserLogged", "true");
+      setUser(data);
+      setIsLogged(true);
+      // Alert.alert("Success", "User signed in successfully");
+      router.replace("/home");
+    } catch (err) {
+      setSubmitting(false);
+
+      if (typeof err.response.data.message === "string") {
+        return Alert.alert("Error", err.response.data.message);
+      }
+      Alert.alert("Error", err.response.data.message[0]);
     }
   };
+  useEffect(() => {
+    const handleData = async () => {};
+    handleData();
+  }, []);
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -47,6 +68,9 @@ const SignIn = () => {
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
+          <Pressable onPress={() => router.back()} className="w-full mb-10">
+            <Text className="text-lg text-gray-100 font-pregular">Back</Text>
+          </Pressable>
           <Image
             source={images.logo}
             resizeMode="contain"

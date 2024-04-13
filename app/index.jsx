@@ -1,19 +1,57 @@
 import { StatusBar } from "expo-status-bar";
 import { Redirect, router } from "expo-router";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { images } from "../constants";
 import { CustomButton, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Welcome = () => {
-  const { loading, isLogged } = useGlobalContext();
+  const { loading, setLoading } = useGlobalContext();
 
-  if (!loading && isLogged) return <Redirect href="/home" />;
+  useEffect(() => {
+    setLoading(true);
+    const handleData = async () => {
+      const isUserLogged = await AsyncStorage.getItem("isUserLogged");
+
+      setLoading(false);
+      if (isUserLogged === "true") {
+        router.push("/home");
+      }
+    };
+
+    handleData();
+  }, []);
 
   return (
     <SafeAreaView className="bg-primary h-full">
+      {loading && (
+        <Modal
+          style={{
+            backgroundColor: "black",
+            opacity: 0.5,
+            flex: 1,
+            padding: 50,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "black",
+            }}
+          >
+            <Image
+              source={require("../assets/loadStart.gif")}
+              style={{ width: "100%", height: "30%" }}
+            />
+          </View>
+        </Modal>
+      )}
       <Loader isLoading={loading} />
 
       <ScrollView
