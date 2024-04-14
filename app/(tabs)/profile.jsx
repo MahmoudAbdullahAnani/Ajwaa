@@ -44,8 +44,7 @@ const Profile = () => {
     }
   };
 
-  console.log("test...");
-  console.log(user);
+
   useEffect(() => {
     getData();
   }, []);
