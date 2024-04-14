@@ -8,6 +8,7 @@ import { CustomButton, Loader } from "../components";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { iconPath } from "../assets/SVGRIcons";
 
 const Welcome = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -78,10 +79,10 @@ const Welcome = () => {
               Discover Endless{"\n"}
               Possibilities with <Text className="text-[#2AA3CD]">Ajwaa</Text>
             </Text>
-
+            {/* <View className={`w-[200px] h-[48px] ml-auto mr-[20px]`}>{iconPath}</View> */}
             <Image
               source={images.path}
-              className="w-[136px] h-[15px] absolute -bottom-2 -right-8"
+              className="w-[136px] h-[15px] absolute -bottom-2 -right-8 mt-2"
               resizeMode="contain"
             />
           </View>

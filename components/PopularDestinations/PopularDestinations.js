@@ -4,14 +4,14 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  Image,
   ScrollView,
   ActivityIndicator,
   Modal,
 } from "react-native";
 import axios from "axios";
+import { Image } from "expo-image";
 
-import { SliderBox } from "react-native-image-slider-box";
+import Swiper from "react-native-swiper";
 
 // import VideoPlayer from "react-native-video-player";
 export const exampleMainImage =
@@ -125,69 +125,20 @@ export default function PopularDestinations() {
           gap: 10,
         }}
       >
-        <SliderBox
-          images={images}
-          sliderBoxHeight={400}
-          autoplay={true}
-          autoplayInterval={5000}
-          circleLoop
-          resizeMode="cover"
-          ImageComponentStyle={{
-            borderTopRightRadius: 10,
-            borderTopLeftRadius: 10,
-            width: "100%",
-            height: "100%",
-          }}
-          imageLoadingColor="#2196F3"
-        />
-
-        {/* {data.map((item, index) => (
-          <View
-            key={index}
-            style={{
-              flex: 1,
-              width: "100%",
-              // justifyContent: "center",
-              // alignItems: "center",
-            }}
-          >
-            <Image
-              source={{ uri: item.img }}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                zIndex: 5,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                // marginHorizontal: 10,
-              }}
-            />
-          </View>
-        ))} */}
+        <Swiper style={[{}]} loop={true} autoplay={true}>
+          {data.map((item, index) => (
+            <View key={index} className={`w-[100%] h-[100%]`}>
+              <Image
+                source={item.img}
+                placeholder={"ajwaa"}
+                contentFit="cover"
+                transition={1000}
+                className={`w-[100%] h-[100%] z-[5] rounded-t-[10px]`}
+              />
+            </View>
+          ))}
+        </Swiper>
       </View>
-
-      {/* <View
-        style={{
-          flex: 1,
-          height: 200,
-          marginVertical: 10,
-          marginHorizontal: 16,
-        }}
-      >
-        <Image
-          source={{
-            uri: `https://mahmoud-abdullah-anani.vercel.app/static/media/Home-Avtar.93e9c5d0be05dbf228c4.jpg`,
-          }}
-          resizeMode="cover"
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: 20,
-            objectFit: "fill",
-          }}
-        />
-      </View> */}
     </View>
   );
 }

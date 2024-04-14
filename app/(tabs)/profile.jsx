@@ -1,6 +1,8 @@
+import { Image } from "expo-image";
+
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Image, FlatList, TouchableOpacity, Text } from "react-native";
+import { View, FlatList, TouchableOpacity, Text } from "react-native";
 
 import { icons } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
@@ -42,6 +44,8 @@ const Profile = () => {
     }
   };
 
+  console.log("test...");
+  console.log(user);
   useEffect(() => {
     getData();
   }, []);
@@ -53,7 +57,7 @@ const Profile = () => {
       <TouchableOpacity onPress={logout} className="flex w-full items-end">
         <Image
           source={icons.logout}
-          resizeMode="contain"
+          // resizeMode="contain"
           className="w-6 h-6 m-5"
           alt="Logout"
         />
@@ -61,13 +65,20 @@ const Profile = () => {
       <View className="flex flex-col items-center ">
         <View className={`flex justify-center items-center`}>
           <Image
+            className="w-[100px] h-[100px] rounded-full m-5"
+            source={data.avatar}
+            placeholder={"Avatar"}
+            contentFit="cover"
+            transition={1000}
+          />
+          {/* <Image
             source={{
               uri: data.avatar,
             }}
             resizeMode="contain"
             className="w-[100px] h-[100px] rounded-full m-5"
             alt="Avatar"
-          />
+          /> */}
         </View>
         <Text className={`text-3xl font-psemibold text-white`}>
           {data.lastName !== ""

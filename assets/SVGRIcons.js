@@ -130,3 +130,13 @@ export const iconBarthDay = (
     />
   </Svg>
 );
+export const iconPath = (
+  <Svg xmlns="http://www.w3.org/2000/svg" fill="none">
+    <Path
+      stroke="#2AA3CD"
+      strokeLinecap="round"
+      strokeWidth={8}
+      d="M2.5 31.304c50.5-23 34-34.018 20.5-23"
+    />
+  </Svg>
+);

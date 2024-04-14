@@ -15,13 +15,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import KeyFeatures from "../../components/KeyFeatures/KeyFeatures";
 import SafetyGuaranteeCertificates from "../../components/SafetyGuaranteeCertificates/SafetyGuaranteeCertificates";
 import SafetyGuaranteeCertificatesTow from "../../components/SafetyGuaranteeCertificates/SafetyGuaranteeCertificatesTow";
+import { useGlobalContext } from "../../context/GlobalProvider";
+import { router } from "expo-router";
 const Home = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
+
   useEffect(() => {
     const handleData = async () => {
       const data = await AsyncStorage.getItem("UserData");
-      // console.log("====================================");
-      // console.log("home data==> ", JSON.parse(data));
-      // console.log("====================================");
+      if (data === null) {
+        setIsLogged(false);
+        setUser(null);
+        return router.push("/index");
+      }
     };
 
     handleData();
