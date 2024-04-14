@@ -61,7 +61,7 @@ const Profile = () => {
           alt="Logout"
         />
       </TouchableOpacity>
-      <View className="flex flex-col items-center ">
+      <View className="flex flex-col items-center">
         <View className={`flex justify-center items-center`}>
           <Image
             className="w-[100px] h-[100px] rounded-full m-5"
@@ -70,14 +70,7 @@ const Profile = () => {
             contentFit="cover"
             transition={1000}
           />
-          {/* <Image
-            source={{
-              uri: data.avatar,
-            }}
-            resizeMode="contain"
-            className="w-[100px] h-[100px] rounded-full m-5"
-            alt="Avatar"
-          /> */}
+
         </View>
         <Text className={`text-3xl font-psemibold text-white`}>
           {data.lastName !== ""

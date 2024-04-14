@@ -146,9 +146,6 @@ export default function PopularDestinations() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: "start",
-    // justifyContent: "start",
-    // marginHorizontal: 12,
   },
   text: {
     fontSize: 16,
