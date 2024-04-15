@@ -7,7 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   Text,
-  ScrollView,
+  Pressable,
 } from "react-native";
 
 import { icons } from "../../constants";
@@ -49,18 +49,17 @@ const Profile = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  // 'http://text.com'
   useEffect(() => {
     getData();
   }, []);
   if (loadingState) {
     return <></>;
   }
-
   return (
-    <>
-      <SafeAreaView className="bg-primary h-full px-[16px]">
-        <TouchableOpacity onPress={logout} className="flex w-full items-end">
+    <SafeAreaView className="bg-primary h-full ">
+      <View className="flex flex-row justify-end">
+        <TouchableOpacity onPress={logout} className="flex w-fit items-end">
           <Image
             source={icons.logout}
             // resizeMode="contain"
@@ -68,54 +67,64 @@ const Profile = () => {
             alt="Logout"
           />
         </TouchableOpacity>
-        <View className="flex flex-col items-center">
-          <ScrollView className={`h-full w-full`}>
-            <FlatList
-              className="w-full h-full text-center"
-              data={[
-                <Image
-                  className="w-[100px] h-[100px] rounded-full mx-auto"
-                  source={{ uri: data.avatar }}
-                  placeholder={"Avatar"}
-                  contentFit="cover"
-                  transition={1000}
-                />,
-              ]}
-              renderItem={({ item }) => item}
-              keyExtractor={() =>
-                `${Math.random()}--${Math.random()}--${Math.random()}`
+      </View>
+      <View className="flex flex-col items-center ">
+        <View className={`flex justify-center items-center`}>
+          <Pressable
+            className={`bg-red-900`}
+            onPress={() =>
+              console.log(data.avatar.replace("http://", "https://"))
+            }
+          >
+            <Image
+              className="w-[100px] h-[100px] rounded-full m-5"
+              source={
+                data.avatar
+                  ? data.avatar.replace("http://", "https://")
+                  : data.avatar
               }
-              ListFooterComponent={() => (
-                <View className={`flex gap-10 mt-5`}>
-                  <Text className={`text-3xl font-psemibold text-white `}>
-                    {data.lastName !== ""
-                      ? `${data.firstName} ${data.lastName}`
-                      : `${data.firstName}`}
-                  </Text>
-                  {data.age && (
-                    <Text className={`text-2xl font-psemibold text-white`}>
-                      <Text className={`text-3xl font-psemibold text-white`}>
-                        Barth Day:
-                      </Text>
-                      {`  `}
-                      {data.age}
-                    </Text>
-                  )}
-                  {data.email && (
-                    <Text className={`text-2xl font-psemibold text-white`}>
-                      <Text className={`text-2xl font-psemibold text-white`}>
-                        Email:
-                      </Text>
-                      {data.email}
-                    </Text>
-                  )}
-                </View>
-              )}
+              placeholder={"Avatar"}
+              contentFit="cover"
+              transition={1000}
+              onLoadStart={() => console.log("start loading...")}
+              onLoadEnd={() => console.log("End loading...")}
+              onError={(error) => console.log("error", error)}
             />
-          </ScrollView>
+          </Pressable>
+          {/* <Image
+            source={{
+              uri: data.avatar,
+            }}
+            resizeMode="contain"
+            className="w-[100px] h-[100px] rounded-full m-5"
+            alt="Avatar"
+          /> */}
         </View>
-      </SafeAreaView>
-    </>
+        <Text className={`text-3xl font-psemibold text-white`}>
+          {data.lastName !== ""
+            ? `${data.firstName} ${data.lastName}`
+            : `${data.firstName}`}
+        </Text>
+      </View>
+      {data.age && (
+        <View className="flex justify-center m-5">
+          <Text className={`text-3xl font-psemibold text-white`}>
+            Barth Day:
+          </Text>
+          <Text className={`text-3xl font-psemibold text-white`}>
+            {data.age}
+          </Text>
+        </View>
+      )}
+      {data.email && (
+        <View className="flex justify-center m-5">
+          <Text className={`text-2xl font-psemibold text-white`}>Email:</Text>
+          <Text className={`text-2xl font-psemibold text-white`}>
+            {data.email}
+          </Text>
+        </View>
+      )}
+    </SafeAreaView>
   );
 };
 

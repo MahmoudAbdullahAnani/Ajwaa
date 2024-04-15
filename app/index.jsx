@@ -26,32 +26,32 @@ const Welcome = () => {
 
     handleData();
   }, []);
-  if (loading) {
-    return (
-      <Modal
-        style={{
-          backgroundColor: "black",
-          opacity: 0.5,
-          flex: 1,
-          padding: 50,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "black",
-          }}
-        >
-          <Image
-            source={require("../assets/loadStart.gif")}
-            style={{ width: "100%", height: "30%" }}
-          />
-        </View>
-      </Modal>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Modal
+  //       style={{
+  //         backgroundColor: "black",
+  //         opacity: 0.5,
+  //         flex: 1,
+  //         padding: 50,
+  //       }}
+  //     >
+  //       <View
+  //         style={{
+  //           flex: 1,
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           backgroundColor: "black",
+  //         }}
+  //       >
+  //         <Image
+  //           source={require("../assets/loadStart.gif")}
+  //           style={{ width: "100%", height: "30%" }}
+  //         />
+  //       </View>
+  //     </Modal>
+  //   );
+  // }
   return (
     <SafeAreaView className="bg-primary h-full">
       <Loader isLoading={loading} />

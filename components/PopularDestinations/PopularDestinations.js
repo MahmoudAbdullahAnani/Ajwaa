@@ -129,7 +129,7 @@ export default function PopularDestinations() {
           {data.map((item, index) => (
             <View key={index} className={`w-[100%] h-[100%]`}>
               <Image
-                source={item.img}
+                source={item.img.replace("http://", "https://")}
                 placeholder={"ajwaa"}
                 contentFit="cover"
                 transition={1000}
