@@ -2,7 +2,13 @@ import { Image } from "expo-image";
 
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, FlatList, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from "react-native";
 
 import { icons } from "../../constants";
 import { useGlobalContext } from "../../context/GlobalProvider";
@@ -44,59 +50,72 @@ const Profile = () => {
     }
   };
 
-
   useEffect(() => {
     getData();
   }, []);
   if (loadingState) {
     return <></>;
   }
-  return (
-    <SafeAreaView className="bg-primary h-full ">
-      <TouchableOpacity onPress={logout} className="flex w-full items-end">
-        <Image
-          source={icons.logout}
-          // resizeMode="contain"
-          className="w-6 h-6 m-5"
-          alt="Logout"
-        />
-      </TouchableOpacity>
-      <View className="flex flex-col items-center">
-        <View className={`flex justify-center items-center`}>
-          <Image
-            className="w-[100px] h-[100px] rounded-full m-5"
-            source={data.avatar}
-            placeholder={"Avatar"}
-            contentFit="cover"
-            transition={1000}
-          />
 
+  return (
+    <>
+      <SafeAreaView className="bg-primary h-full px-[16px]">
+        <TouchableOpacity onPress={logout} className="flex w-full items-end">
+          <Image
+            source={icons.logout}
+            // resizeMode="contain"
+            className="w-6 h-6 m-5"
+            alt="Logout"
+          />
+        </TouchableOpacity>
+        <View className="flex flex-col items-center">
+          <ScrollView className={`h-full w-full`}>
+            <FlatList
+              className="w-full h-full text-center"
+              data={[
+                <Image
+                  className="w-[100px] h-[100px] rounded-full mx-auto"
+                  source={{ uri: data.avatar }}
+                  placeholder={"Avatar"}
+                  contentFit="cover"
+                  transition={1000}
+                />,
+              ]}
+              renderItem={({ item }) => item}
+              keyExtractor={() =>
+                `${Math.random()}--${Math.random()}--${Math.random()}`
+              }
+              ListFooterComponent={() => (
+                <View className={`flex gap-10 mt-5`}>
+                  <Text className={`text-3xl font-psemibold text-white `}>
+                    {data.lastName !== ""
+                      ? `${data.firstName} ${data.lastName}`
+                      : `${data.firstName}`}
+                  </Text>
+                  {data.age && (
+                    <Text className={`text-2xl font-psemibold text-white`}>
+                      <Text className={`text-3xl font-psemibold text-white`}>
+                        Barth Day:
+                      </Text>
+                      {`  `}
+                      {data.age}
+                    </Text>
+                  )}
+                  {data.email && (
+                    <Text className={`text-2xl font-psemibold text-white`}>
+                      <Text className={`text-2xl font-psemibold text-white`}>
+                        Email:
+                      </Text>
+                      {data.email}
+                    </Text>
+                  )}
+                </View>
+              )}
+            />
+          </ScrollView>
         </View>
-        <Text className={`text-3xl font-psemibold text-white`}>
-          {data.lastName !== ""
-            ? `${data.firstName} ${data.lastName}`
-            : `${data.firstName}`}
-        </Text>
-      </View>
-      {data.age && (
-        <View className="flex justify-center m-5">
-          <Text className={`text-3xl font-psemibold text-white`}>
-            Barth Day:
-          </Text>
-          <Text className={`text-3xl font-psemibold text-white`}>
-            {data.age}
-          </Text>
-        </View>
-      )}
-      {data.email && (
-        <View className="flex justify-center m-5">
-          <Text className={`text-2xl font-psemibold text-white`}>Email:</Text>
-          <Text className={`text-2xl font-psemibold text-white`}>
-            {data.email}
-          </Text>
-        </View>
-      )}
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   );
 };
 
