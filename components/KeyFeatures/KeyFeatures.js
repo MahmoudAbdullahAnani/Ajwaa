@@ -7,7 +7,7 @@ export const StyleHeader = `text-white text-2xl font-bold`;
 export default function KeyFeatures() {
   const [countItemsView, setCountItemsView] = useState(3);
   return (
-    <View className={` `}>
+    <View>
       <View>
         <Text className={`${StyleHeader}`}>Key Features</Text>
         {DataKeyFeatures.slice(0, countItemsView).map((item) => (

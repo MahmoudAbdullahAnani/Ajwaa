@@ -17,6 +17,7 @@ import SafetyGuaranteeCertificates from "../../components/SafetyGuaranteeCertifi
 import SafetyGuaranteeCertificatesTow from "../../components/SafetyGuaranteeCertificates/SafetyGuaranteeCertificatesTow";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { router } from "expo-router";
+import VideoComponent from "../../components/Vid/Video";
 const Home = () => {
   const { setUser, setIsLogged } = useGlobalContext();
 
@@ -35,10 +36,19 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-primary">
-      <ScrollView className="bg-primary">
-        <PopularDestinations />
+      <Text className="text-2xl text-white font-psemibold p-3">Home</Text>
+
+      <ScrollView className="bg-primary mt-5 mb-10">
+        <VideoComponent
+          uri={
+            "https://res.cloudinary.com/dxrgztsfz/video/upload/v1713341509/sjxrmmaibiljtmxluoct.mp4"
+          }
+        />
         <View className={`my-6 px-4`}>
           <KeyFeatures />
+        </View>
+        <PopularDestinations />
+        <View className={`my-6 px-4`}>
           <SafetyGuaranteeCertificates />
           <SafetyGuaranteeCertificatesTow />
         </View>
