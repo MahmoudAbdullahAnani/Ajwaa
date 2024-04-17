@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
-import { createUser } from "../../lib/appwrite";
+import { SignUp as createUser } from "../../lib/appwrite";
 import { CustomButton, FormField } from "../../components";
 import { useGlobalContext } from "../../context/GlobalProvider";
 
@@ -13,27 +13,38 @@ const SignUp = () => {
 
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
 
   const submit = async () => {
-    if (form.username === "" || form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill in all fields");
+    const { name, email, password } = form;
+    if (name === "" || email === "" || password === "") {
+      return Alert.alert("Error", "Please fill in all fields");
     }
-
+    // console.log("====================================");
+    // console.log({ name, email, password });
+    // console.log("====================================");
     setSubmitting(true);
     try {
-      const result = await createUser(form.email, form.password, form.username);
-      setUser(result);
-      setIsLogged(true);
-
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
+      await createUser(email, password, name);
+      setIsLogged(false);
       setSubmitting(false);
+      Alert.alert("Success", "Check your email for verification code");
+      router.replace("/verificationAccountCode");
+    } catch (err) {
+      setSubmitting(false);
+      console.log(err);
+      if (
+        err.response.data.message === "The user is already exist, go to login"
+      ) {
+        return router.replace("/verificationAccountCode");
+      }
+      if (typeof err.response.data.message === "string") {
+        return Alert.alert("Error", err.response.data.message);
+      }
+      Alert.alert("Error", err.response.data.message[0]);
     }
   };
 
@@ -57,15 +68,17 @@ const SignUp = () => {
           </Text>
 
           <FormField
-            title="Username"
-            value={form.username}
-            handleChangeText={(e) => setForm({ ...form, username: e })}
+            title="Name"
+            placeholder={"Enter your name"}
+            value={form.name}
+            handleChangeText={(e) => setForm({ ...form, name: e })}
             otherStyles="mt-10"
           />
 
           <FormField
             title="Email"
             value={form.email}
+            placeholder={"Enter your email"}
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7"
             keyboardType="email-address"
@@ -73,6 +86,7 @@ const SignUp = () => {
 
           <FormField
             title="Password"
+            placeholder={"Enter your password"}
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"

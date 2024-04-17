@@ -60,45 +60,22 @@ const Profile = () => {
     <SafeAreaView className="bg-primary h-full ">
       <View className="flex flex-row justify-end">
         <TouchableOpacity onPress={logout} className="flex w-fit items-end">
-          <Image
-            source={icons.logout}
-            // resizeMode="contain"
-            className="w-6 h-6 m-5"
-            alt="Logout"
-          />
+          <Image source={icons.logout} className="w-6 h-6 m-5" alt="Logout" />
         </TouchableOpacity>
       </View>
       <View className="flex flex-col items-center ">
         <View className={`flex justify-center items-center`}>
-          <Pressable
-            className={`bg-red-900`}
-            onPress={() =>
-              console.log(data.avatar.replace("http://", "https://"))
-            }
-          >
-            <Image
-              className="w-[100px] h-[100px] rounded-full m-5"
-              source={
-                data.avatar
-                  ? data.avatar.replace("http://", "https://")
-                  : data.avatar
-              }
-              placeholder={"Avatar"}
-              contentFit="cover"
-              transition={1000}
-              onLoadStart={() => console.log("start loading...")}
-              onLoadEnd={() => console.log("End loading...")}
-              onError={(error) => console.log("error", error)}
-            />
-          </Pressable>
-          {/* <Image
-            source={{
-              uri: data.avatar,
-            }}
-            resizeMode="contain"
+          <Image
             className="w-[100px] h-[100px] rounded-full m-5"
-            alt="Avatar"
-          /> */}
+            source={
+              data.avatar
+                ? data.avatar.replace("http://", "https://")
+                : "https://cdn-icons-png.flaticon.com/512/9131/9131529.png"
+            }
+            placeholder={"Avatar"}
+            contentFit="cover"
+            transition={1000}
+          />
         </View>
         <Text className={`text-3xl font-psemibold text-white`}>
           {data.lastName !== ""

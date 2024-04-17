@@ -112,8 +112,8 @@ export default function PopularDestinations() {
   }
 
   return (
-    <View className={`h-[250px] bg-black-200`}>
-      <Text style={[styles.header, { color: "#117C99" }]}>
+    <View className={`h-[250px] bg-black-200 pt-5`}>
+      <Text style={[styles.header, { color: "#fff" }]}>
         Popular Destinations ({data.length})
       </Text>
       <View

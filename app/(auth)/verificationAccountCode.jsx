@@ -1,88 +1,56 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  Alert,
-  Image,
-  Pressable,
-} from "react-native";
+import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
+import { VerificationAccountCode } from "../../lib/appwrite";
 import { CustomButton, FormField } from "../../components";
-// import { signIn } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { signIn } from "../../lib/appwrite";
-import { i18n } from "../../localization/local";
 
-const SignIn = () => {
+const verificationAccountCode = () => {
   const { setUser, setIsLogged } = useGlobalContext();
+
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    code: "",
   });
 
   const submit = async () => {
-    const { email, password } = form;
-    if (email === "" || password === "") {
-      return Alert.alert("Error", "Please fill in all fields");
+    const { code } = form;
+    if (code === "") {
+      return Alert.alert("Error", "Please fill in field code");
     }
-
     setSubmitting(true);
-
     try {
-      const data = await signIn(email, password);
-      if ((data.data?.verificationAccountCode || "") !== "done") {
-        await AsyncStorage.setItem(
-          "EmailUserName",
-          JSON.stringify({
-            email: data.data.email,
-            userName: data.data.userName,
-          })
-        );
-        router.replace("/verificationAccountCode");
-        return Alert.alert("Error", "Please verify your email");
-      }
+      const data = await VerificationAccountCode(code);
       setSubmitting(false);
       await AsyncStorage.setItem("UserData", JSON.stringify(data));
 
       await AsyncStorage.setItem("isUserLogged", "true");
       setUser(data);
       setIsLogged(true);
-      // Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
+      return router.replace("/home");
     } catch (err) {
       setSubmitting(false);
-
+      console.log(err);
       if (typeof err.response.data.message === "string") {
         return Alert.alert("Error", err.response.data.message);
       }
       Alert.alert("Error", err.response.data.message[0]);
     }
   };
-  useEffect(() => {
-    const handleData = async () => {};
-    handleData();
-  }, []);
 
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView>
         <View
-          className="w-full flex justify-center h-full px-4 my-6"
+          className="w-full flex justify-center h-full px-4 mb-6"
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}
         >
-          <Pressable onPress={() => router.back()} className="w-full mb-10">
-            <Text className="text-lg text-gray-100 font-pregular">Back</Text>
-          </Pressable>
           <Image
             source={images.logo}
             resizeMode="contain"
@@ -90,26 +58,19 @@ const SignIn = () => {
           />
 
           <Text className="text-2xl font-semibold text-white mt-10 font-psemibold">
-            Log in to Ajwaa
+            Complete Up to Ajwaa
           </Text>
 
           <FormField
-            title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7"
-            keyboardType="email-address"
-          />
-
-          <FormField
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7"
+            title="code"
+            placeholder={"Enter your code"}
+            value={form.code}
+            handleChangeText={(e) => setForm({ ...form, code: e })}
+            otherStyles="mt-10"
           />
 
           <CustomButton
-            title="Sign In"
+            title="Vify Account"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -117,13 +78,13 @@ const SignIn = () => {
 
           <View className="flex justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-gray-100 font-pregular">
-              Don't have an account?
+              Have an account already?
             </Text>
             <Link
-              href="/sign-up"
+              href="/sign-in"
               className="text-lg font-psemibold text-[#2AA3CD] underline"
             >
-              Signup
+              Login
             </Link>
           </View>
         </View>
@@ -132,4 +93,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default verificationAccountCode;

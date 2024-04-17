@@ -9,6 +9,7 @@ import { useGlobalContext } from "../context/GlobalProvider";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { iconPath } from "../assets/SVGRIcons";
+import { i18n } from "../localization/local";
 
 const Welcome = () => {
   const { loading, setLoading } = useGlobalContext();
@@ -17,7 +18,6 @@ const Welcome = () => {
     setLoading(true);
     const handleData = async () => {
       const isUserLogged = await AsyncStorage.getItem("isUserLogged");
-
       setLoading(false);
       if (isUserLogged === "true") {
         router.push("/home");
