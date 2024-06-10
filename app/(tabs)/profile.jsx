@@ -59,8 +59,7 @@ const Profile = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <Text className="text-2xl text-white font-psemibold p-3">Profile</Text>
-
-      <View className="flex flex-row justify-end mt-5">
+      <View className="flex flex-row justify-end mt-5 bg-red-600">
         <TouchableOpacity onPress={logout} className="flex w-fit items-end">
           <Image source={icons.logout} className="w-6 h-6 m-5" alt="Logout" />
         </TouchableOpacity>

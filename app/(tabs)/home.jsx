@@ -27,7 +27,8 @@ const Home = () => {
       if (data === null) {
         setIsLogged(false);
         setUser(null);
-        return router.push("/index");
+        // console.log("here error...")
+        // return router.replace("index");
       }
     };
 

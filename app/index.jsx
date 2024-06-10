@@ -15,12 +15,15 @@ const Welcome = () => {
   const { loading, setLoading } = useGlobalContext();
 
   useEffect(() => {
+    // console.log("test Index page...")
     setLoading(true);
     const handleData = async () => {
-      const isUserLogged = await AsyncStorage.getItem("isUserLogged");
+      // const isUserLogged = await AsyncStorage.getItem("isUserLogged");
+      const data = await AsyncStorage.getItem("UserData");
+
       setLoading(false);
-      if (isUserLogged === "true") {
-        router.push("/home");
+      if (data) {
+        return router.push("/home");
       }
     };
 
